@@ -1,0 +1,171 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// Модель пользователя
+
+model User {
+  id            String          @id @default(uuid())
+  surname       String
+  userName      String
+  patronymic    String
+  email         String
+  password      String
+  avatarURL     String
+  position      String
+  tel           String
+  role          String          @default("USER")
+  adminType     Boolean         @default(false)
+  resultsCourse ResultsCourse[]
+  unions        Membership[]
+  Participation Participation[]
+  libraryCard   LibraryCard?
+}
+
+// Модели для курса
+
+model Course {
+  id                   String          @id @default(uuid())
+  courseName           String
+  courseNameLower      String
+  courseDescription    String
+  courseImage          String
+  theoreticalMaterials String
+  questions            Question[]
+  ResultsCourse        ResultsCourse[]
+}
+
+// Схема вопроса
+
+model Question {
+  id            Int      @id @default(autoincrement())
+  text          String
+  correctAnswer String
+  courseId      String
+  course        Course   @relation(fields: [courseId], references: [id])
+  answers       Answer[]
+}
+
+// Схема ответов на вопросы
+
+model Answer {
+  id         Int      @id @default(autoincrement())
+  text       String
+  questionId Int
+  question   Question @relation(fields: [questionId], references: [id])
+}
+
+// Схема результатов курса
+
+model ResultsCourse {
+  id            String @id @default(uuid())
+  resultProcent Int
+  user          User   @relation(fields: [userId], references: [id])
+  userId        String
+  course        Course @relation(fields: [courseId], references: [id])
+  courseId      String
+}
+
+// Схема книги
+
+model Book {
+  id              String @id @default(uuid())
+  nameBook        String
+  nameBookLower   String
+  descriptionBook String
+  categoryBook    String @default("technical")
+  imageBook       String
+  fileBook        String
+}
+
+// Схема новости
+
+model News {
+  id              String   @id @default(uuid())
+  newsName        String
+  newsDescription String
+  categoryNews    String
+  newsImage       String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+// Схема спортивного мероприятия
+
+model Event {
+  id             Int             @id @default(autoincrement())
+  name           String
+  description    String
+  eventLocation  String
+  eventPicture   String
+  schedules      Schedule[]
+  participations Participation[]
+}
+
+// Схема дней недели
+
+model DayOfWeek {
+  id        Int        @id @default(autoincrement())
+  name      String     @unique
+  schedules Schedule[]
+}
+
+// Схема расписания
+
+model Schedule {
+  id           Int       @id @default(autoincrement())
+  sportEventId Int
+  dayOfWeekId  Int
+  startTime    String
+  endTime      String
+  sportEvent   Event     @relation(fields: [sportEventId], references: [id])
+  dayOfWeek    DayOfWeek @relation(fields: [dayOfWeekId], references: [id])
+}
+
+// Схема участия в мероприятии 
+
+model Participation {
+  id           Int    @id @default(autoincrement())
+  userId       String
+  sportEventId Int
+  user         User   @relation(fields: [userId], references: [id])
+  sportEvent   Event  @relation(fields: [sportEventId], references: [id])
+
+  @@unique([userId, sportEventId])
+}
+
+// Схема читательского билета
+
+model LibraryCard {
+  id         String   @id @default(uuid())
+  cardNumber String   @default(uuid())
+  issueDate  DateTime @default(now())
+  userId     String   @unique
+  user       User     @relation(fields: [userId], references: [id])
+}
+
+// Схема профсоюза
+
+model Union {
+  id          Int          @id @default(autoincrement())
+  name        String       @unique
+  description String
+  members     Membership[]
+}
+
+// Схема пользователей в профсоюзе
+
+model Membership {
+  id      Int    @id @default(autoincrement())
+  userId  String
+  unionId Int
+  user    User   @relation(fields: [userId], references: [id])
+  union   Union  @relation(fields: [unionId], references: [id])
+
+  @@unique([userId, unionId])
+}
