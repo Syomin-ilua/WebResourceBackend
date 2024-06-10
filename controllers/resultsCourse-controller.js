@@ -3,6 +3,8 @@ const htmlToPdf = require('html-to-pdf');
 const pdf = require("html-pdf");
 const puppeteerHtmlToPdf = require('puppeteer-html-pdf');
 const buildCertificate = require("../services/buildCertificate");
+const { PassThrough } = require('stream');
+const puppeteer = require('puppeteer');
 
 const ResultsCourseController = {
     addResults: async (req, res) => {
@@ -261,52 +263,95 @@ const ResultsCourseController = {
             align-items: center;
             justify-content: center;
         }
+            table.iksweb{
+	width: 100%;
+	height: auto;
+}
+table.iksweb td,table.iksweb th {
+	padding: 3px;
+	width: 30px;
+	height: 35px;
+}
+table.iksweb th {
+	background: #347c99; 
+	color: #fff; 
+	font-weight: normal;
+}
+    .top {
+        width: 100%;
+        height: 150px;
+        background-color: #00528F;
+        padding: 50px;
+    }
+        tr {
+            width: 100%;
+            border: none;
+            margin: 50px;
+        }
+        td {
+            width: 100%;
+            border: none;
+        }
+            td svg {
+                display: inline-block;
+            }
+                .logo__title {
+                    display: inline-block;
+                    vertical-align: center;
+                }
+                    table {border: none;}
+                    .certificate__author {
+                        margin-bottom: 50px;
+                    }
+                        .results {
+                        margin-bottom: 50px;
+                        }
     </style>
     <title>Сертификат</title>
 </head>
 
 <body>
 
-
-    <header class="header">
-        <div class="container">
-            <div class="logo">
-                <svg width="50px" height="50px" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+<table class="iksweb">
+	<tbody>
+		<tr class="top">
+			<td colspan="2">
+             <svg width="50px" height="50px" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
                         d="M18.5625 11.5312L23.625 14.0625L13.5 19.125L3.375 14.0625L8.4375 11.5312M18.5625 17.1562L23.625 19.6875L13.5 24.75L3.375 19.6875L8.4375 17.1562M13.5 3.375L23.625 8.4375L13.5 13.5L3.375 8.4375L13.5 3.375Z"
                         stroke="white" stroke-width="2" />
                 </svg>
-                <h1 class="logo__title">Ресурсный центр <br> “Воронеж-ПЛАСТ”</h1>
-            </div>
-        </div>
-    </header>
-
-    <main class="main">
-        <div class="container">
-            <div class="wrapper">
-                <div class="leftSide">
+                <h1 class="logo__title">ООО ПЛАСТ</h1>
+            </td>
+		</tr>
+		<tr>
+			<td>
+            <div class="leftSide">
                     <div class="certificate__info">
                         <h2 class="certificate__title">Сертификат</h2>
-                        <p class="certificate__number">№ от 07.05.2024</p>
+                        <p class="certificate__number">№${result.courseId}</p>
                     </div>
                     <div class="certificate__author">
                         <p>Иванов Иван Иванович</p>
                         <p>Автор курса</p>
                     </div>
                 </div>
-                <div class="rightSide">
+            </td>
+            <td>
+            <div class="rightSide">
                     <div class="user">
                         <h2 class="user__info">${result.user.surname + " " + result.user.userName + " " + result.user.patronymic}</h2>
                     </div>
                     <div class="results">
                         <p>Успешно прошёл/прошла курс</p>
                         <p>${result.course.courseName} </p>
-                        <p><span>Результат:</span> ${result.resultProcent}</p>
+                        <p><span>Результат:</span> ${result.resultProcent} %</p>
                     </div>
                 </div>
-            </div>
-        </div>
-    </main>
+            </td>
+		</tr>
+	</tbody>
+</table>
 
 
 </body>
@@ -342,7 +387,7 @@ const ResultsCourseController = {
         }
 
         try {
-            
+
             const deleteResult = await prisma.resultsCourse.delete({
                 where: { id }
             });

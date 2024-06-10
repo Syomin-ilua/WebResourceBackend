@@ -22,7 +22,7 @@
     "jdenticon": "^3.2.0",
     "jsonwebtoken": "^9.0.2",
     "morgan": "~1.9.1",
-    "puppeteer": "^22.8.0",
+    "puppeteer": "^22.10.0",
     "puppeteer-html-pdf": "^3.0.4",
     "readable-web-to-node-stream": "^3.0.2"
   },
