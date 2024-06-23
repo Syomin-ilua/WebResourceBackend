@@ -128,208 +128,207 @@ const ResultsCourseController = {
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
         rel="stylesheet">
     <style>
-        * {
-            box-sizing: border-box;
-            padding: 0px;
-            margin: 0px;
-            font-family: "Montserrat", sans-serif;
-        }
-
-        .header {
-            width: 100%;
-            height: 150px;
-            background-color: #00528F;
-        }
-
-        .container {
-            max-width: 90%;
-            margin: 0 auto;
-            width: 100%;
-            height: 100%;
-        }
-
-        .logo {
-            width: 100%;
-            height: 100%;
-            padding-top: 50px;
-        }
-
-        .logo svg {
-            display:inline-block
-        }
-
-        .logo h1 {
-            display:inline-block
-        }
-
-        .logo__title {
-            font-size: 20px;
-            color: #fff;
-        }
-
-        .certificate__number {
-            font-weight: 500;
-            color: #333;
-        }
-
-        .certificate__author {
-            max-width: 350px;
-            margin-top: 100px
-            width: 100%;
-        }
-
-        .certificate__author p:nth-of-type(1) {
-            font-size: 16px;
-            font-weight: 500;
-            color: #333;
-            text-align: left;
-        }
-
-        .certificate__author p:nth-of-type(2) {
-            font-size: 16px;
-            font-weight: 700;
-            color: #00528F;
-            text-align: left;
-        }
-
-        .main {
-            margin-top: 30px;
-        }
-
-        .certificate__title {
-            color: #333;
-            font-weight: 700;
-            font-size: 28px;
-        }
-
-        .certificate__info {
-            display: flex;
-            flex-direction: column;
-            row-gap: 5px;
-        }
-
-        .wrapper {
-            width: 100%;
-            height: 55vh;
-            display: flex;
-        }
-
-        .leftSide {
-            display: inline;
-        }
-
-        .rightSide {
-            display: inline;
-        }
-
-        .results {
-            display: flex;
-            flex-direction: column;
-            row-gap: 10px;
-        }
-
-        .results p:nth-of-type(1) {
-            font-weight: 500;
-            color: #333;
-        }
-
-        .results p:nth-of-type(2) {
-            font-weight: 700;
-            color: #333;
-        }
-
-        .results p:nth-of-type(3) {
-            font-weight: 500;
-            color: #333;
-            display: flex;
-            align-items: center;
-            column-gap: 10px;
-        }
-
-        .results p:nth-of-type(3) span {
-            font-weight: 700;
-            color: #333;
-        }
-
-        .user__info {
-            font-size: 28px;
-            font-weight: 700;
-            color: #333;
-            width: 340px;
-        }
-
-        .podpis {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-            table.iksweb{
-	width: 100%;
-	height: auto;
+        *,
+*::before,
+*::after {
+    box-sizing: border-box;
+    padding: 0px;
+    margin: 0px;
+    font-family: "Montserrat", sans-serif;
 }
-table.iksweb td,table.iksweb th {
-	padding: 3px;
-	width: 30px;
-	height: 35px;
+
+.header {
+    width: 100%;
+    height: 150px;
+    background-color: #00528F;
 }
+
+.container {
+    max-width: 90%;
+    margin: 0 auto;
+    width: 100%;
+    height: 100%;
+}
+
+.logo__title {
+    font-size: 20px;
+    color: #fff;
+    padding-bottom: 40px;
+    font-style: normal;
+    margin-left: 10px;
+}
+
+.certificate__number {
+    font-weight: 400;
+    color: #333;
+    padding-top: 10px;
+    font-size: 13px;
+}
+
+.certificate__author {
+    max-width: 350px;
+    margin-top: 60px;
+    width: 100%;
+}
+
+.certificate__author p:first-of-type {
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+    text-align: left;
+}
+
+.certificate__author p:last-of-type {
+    font-size: 16px;
+    font-weight: 700;
+    color: #00528F;
+    text-align: left;
+}
+
+.main {
+    margin-top: 30px;
+}
+
+.certificate__title {
+    color: #333;
+    font-weight: 700;
+    font-size: 28px;
+}
+
+.certificate__info {
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+}
+
+.wrapper {
+    width: 100%;
+    height: 55vh;
+    display: flex;
+}
+
+.leftSide {
+    display: inline;
+}
+
+.rightSide {
+    display: inline;
+}
+
+.results {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    font-size: 16px;
+}
+
+.results p:first-of-type {
+    font-weight: 500;
+    color: #333;
+}
+
+.results p:nth-of-type(2) {
+    font-weight: 700;
+    color: #333;
+}
+
+.results p:nth-of-type(3) {
+    font-weight: 500;
+    color: #333;
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+}
+
+.results p:nth-of-type(3) span {
+    font-weight: 700;
+    color: #333;
+}
+
+.user__info {
+    font-size: 28px;
+    font-weight: 700;
+    color: #333;
+    width: 340px;
+}
+
+.podpis {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+table.iksweb {
+    width: 100%;
+    height: auto;
+}
+
+
 table.iksweb th {
-	background: #347c99; 
-	color: #fff; 
-	font-weight: normal;
+    background: #347c99; 
+    color: #fff; 
+    font-weight: normal;
 }
-    .top {
-        width: 100%;
-        height: 150px;
-        background-color: #00528F;
-        padding: 50px;
-    }
-        tr {
-            width: 100%;
-            border: none;
-            margin: 50px;
-        }
-        td {
-            width: 100%;
-            border: none;
-        }
-            td svg {
-                display: inline-block;
-            }
-                .logo__title {
-                    display: inline-block;
-                    vertical-align: center;
-                }
-                    table {border: none;}
-                    .certificate__author {
-                        margin-bottom: 50px;
-                    }
-                        .results {
-                        margin-bottom: 50px;
-                        }
+
+.top {
+    width: 100%;
+    background-color: #00528F;
+}
+
+tr {
+    width: 100%;
+    border: none;
+}
+
+td {
+    width: 100%;
+    border: none;
+}
+
+td svg {
+    display: inline-block;
+}
+
+.logo__title {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+.results {
+    
+}
+    th, td {
+vertical-align:top;
+
+}
     </style>
     <title>Сертификат</title>
 </head>
 
-<body>
+<body style="border: 1px solid #00528F; margin: 15px;">
 
 <table class="iksweb">
 	<tbody>
 		<tr class="top">
-			<td colspan="2">
+			<td style="padding-top: 40px; padding-left: 40px;" colspan="2">
              <svg width="50px" height="50px" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
                         d="M18.5625 11.5312L23.625 14.0625L13.5 19.125L3.375 14.0625L8.4375 11.5312M18.5625 17.1562L23.625 19.6875L13.5 24.75L3.375 19.6875L8.4375 17.1562M13.5 3.375L23.625 8.4375L13.5 13.5L3.375 8.4375L13.5 3.375Z"
                         stroke="white" stroke-width="2" />
                 </svg>
-                <h1 class="logo__title">ООО ПЛАСТ</h1>
+                <h1 class="logo__title">ООО ПЛАСТЪ</h1>
             </td>
 		</tr>
 		<tr>
-			<td>
-            <div class="leftSide">
+			<td style="padding: 50px;">
+                <div class="leftSide">
                     <div class="certificate__info">
                         <h2 class="certificate__title">Сертификат</h2>
-                        <p class="certificate__number">№${result.courseId}</p>
+                        <p class="certificate__number"><span>№${result.courseId}</span> от ${new Date(result.dataCourse).toLocaleDateString()}</p>
                     </div>
                     <div class="certificate__author">
                         <p>Иванов Иван Иванович</p>
@@ -337,12 +336,12 @@ table.iksweb th {
                     </div>
                 </div>
             </td>
-            <td>
-            <div class="rightSide">
+            <td style="padding: 50px;" >
+                <div class="rightSide">
                     <div class="user">
                         <h2 class="user__info">${result.user.surname + " " + result.user.userName + " " + result.user.patronymic}</h2>
                     </div>
-                    <div class="results">
+                    <div style="margin-top: 40px;" class="results">
                         <p>Успешно прошёл/прошла курс</p>
                         <p>${result.course.courseName} </p>
                         <p><span>Результат:</span> ${result.resultProcent} %</p>

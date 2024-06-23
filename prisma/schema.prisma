@@ -20,7 +20,6 @@ model User {
   position      String
   tel           String
   role          String          @default("USER")
-  adminType     Boolean         @default(false)
   resultsCourse ResultsCourse[]
   unions        Membership[]
   Participation Participation[]
@@ -69,6 +68,7 @@ model ResultsCourse {
   userId        String
   course        Course @relation(fields: [courseId], references: [id])
   courseId      String
+  dataCourse    DateTime @default(now())
 }
 
 // Схема книги

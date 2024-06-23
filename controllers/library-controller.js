@@ -33,7 +33,7 @@ const LibraryController = {
         }
     },
     deleteUserInLibrary: async (req, res) => {
-        const id = req.params;
+        const { id } = req.params;
 
         if(!id) {
             return res.status(400).json({
@@ -44,7 +44,7 @@ const LibraryController = {
         try {
             const deleteUserLibrary = await prisma.libraryCard.delete({
                 where: {
-                    id
+                    userId: id
                 }
             });
 

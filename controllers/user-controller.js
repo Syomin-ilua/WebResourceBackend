@@ -52,6 +52,7 @@ const UserController = {
             return res.status(200).json(user);
 
         } catch (error) {
+            console.log(error);
             return res.status(500).json({
                 error: "Произошла ошибка на сервере!"
             })
@@ -85,7 +86,7 @@ const UserController = {
                 })
             }
 
-            const token = jwt.sign(({ userId: existUser.id, adminType: existUser.adminType }), process.env.SECRET_KEY);
+            const token = jwt.sign(({ userId: existUser.id, role: existUser.role }), process.env.SECRET_KEY);
 
             return res.status(200).json({ token });
 
@@ -233,19 +234,34 @@ const UserController = {
 
             fs.unlinkSync(path.join(__dirname, "/../uploads/user-avatars/", user.avatarURL));
 
-            const deleteUser = await prisma.user.delete({
-                where: { id },
-            });
-
+            
             const deleteUserResultsCourse = await prisma.resultsCourse.deleteMany({
                 where: {
                     userId: id
                 }
             });
+            
+            const deleteUserPartip = await prisma.participation.deleteMany({
+                where: {
+                    userId: id, 
+                }
+            })
+
+            const deleteMembership = await prisma.membership.deleteMany({
+                where: {
+                    userId: id
+                }
+            });
+
+            const deleteUser = await prisma.user.delete({
+                where: { id },
+            });
+
 
             return res.status(200).json(deleteUser);
 
         } catch (error) {
+            console.log(error);
             return res.status(500).json({
                 error: "Произошла ошибка на сервере!"
             });
