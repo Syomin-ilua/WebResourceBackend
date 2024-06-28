@@ -10,7 +10,7 @@ const allowedTypesFile = ["application/pdf"];
 
 const CourseConroller = {
     addCourse: async (req, res) => {
-        const { nameCourse, descriptionCourse, questions } = req.body;
+        const { nameCourse, descriptionCourse, questions, theoreticalMaterials } = req.body;
 
         const questionsData = JSON.parse(questions);
 
@@ -26,10 +26,8 @@ const CourseConroller = {
             }
 
             let coursePictureName;
-            let courseMaterialName;
-            if (req.files) {
+            if (req.files.imageCourse) {
                 const imageCourse = req.files.imageCourse;
-                const courseMaterial = req.files.courseMaterialFile;
 
                 if (!allowedTypesImage.includes(imageCourse.mimetype)) {
                     return res.status(400).json({
@@ -37,17 +35,8 @@ const CourseConroller = {
                     });
                 }
 
-                if (!allowedTypesFile.includes(courseMaterial.mimetype)) {
-                    return res.status(400).json({
-                        error: "Разрешено загружать материалы курса только с типом pdf"
-                    });
-                }
-
                 coursePictureName = Date.now() + "_" + imageCourse.name;
-                imageCourse.mv(path.join(__dirname, "/../uploads/course-materials/images/", coursePictureName));
-
-                courseMaterialName = Date.now() + "_" + courseMaterial.name;
-                courseMaterial.mv(path.join(__dirname, "/../uploads/course-materials/materials/", courseMaterialName));
+                imageCourse.mv(path.join(__dirname, "/../uploads/course-images/", coursePictureName));
             }
 
             const newCourse = await prisma.course.create({
@@ -56,7 +45,7 @@ const CourseConroller = {
                     courseNameLower: nameCourse.toLowerCase(),
                     courseDescription: descriptionCourse,
                     courseImage: coursePictureName,
-                    theoreticalMaterials: courseMaterialName,
+                    theoreticalMaterials: theoreticalMaterials,
                     questions: {
                         create: questionsData.map(question => ({
                             text: question.text,
@@ -106,8 +95,7 @@ const CourseConroller = {
                 });
             }
 
-            fs.unlinkSync(path.join(__dirname, "/../uploads/course-materials/images/", existCourse.courseImage));
-            fs.unlinkSync(path.join(__dirname, "/../uploads/course-materials/materials/", existCourse.theoreticalMaterials));
+            fs.unlinkSync(path.join(__dirname, "/../uploads/course-images/", existCourse.courseImage));
 
             await prisma.$transaction([
                 prisma.resultsCourse.deleteMany({
@@ -225,7 +213,7 @@ const CourseConroller = {
             });
         }
 
-        const { nameCourse, descriptionCourse, questions } = req.body;
+        const { nameCourse, descriptionCourse, questions, theoreticalMaterials } = req.body;
 
         let questionsData;
         if (questions) {
@@ -262,7 +250,6 @@ const CourseConroller = {
             }
 
             let coursePictureName;
-            let courseMaterialName;
             if (req.files) {
                 if (req.files.imageCourse) {
                     const imageCourse = req.files.imageCourse;
@@ -274,28 +261,11 @@ const CourseConroller = {
                     }
 
                     if (existCourse.courseImage) {
-                        fs.unlinkSync(path.join(__dirname, "/../uploads/course-materials/images/", existCourse.courseImage));
+                        fs.unlinkSync(path.join(__dirname, "/../uploads/course-images/", existCourse.courseImage));
                     }
 
                     coursePictureName = Date.now() + "_" + imageCourse.name;
-                    imageCourse.mv(path.join(__dirname, "/../uploads/course-materials/images/", coursePictureName));
-                }
-
-                if (req.files.courseMaterialFile) {
-                    const courseMaterial = req.files.courseMaterialFile;
-
-                    if (!allowedTypesFile.includes(courseMaterial.mimetype)) {
-                        return res.status(400).json({
-                            error: "Разрешено загружать материалы курса только с типом pdf"
-                        });
-                    }
-
-                    if (existCourse.theoreticalMaterials) {
-                        fs.unlinkSync(path.join(__dirname, "/../uploads/course-materials/materials/", existCourse.theoreticalMaterials));
-                    }
-
-                    courseMaterialName = Date.now() + "_" + courseMaterial.name;
-                    courseMaterial.mv(path.join(__dirname, "/../uploads/course-materials/materials/", courseMaterialName));
+                    imageCourse.mv(path.join(__dirname, "/../uploads/course-images/", coursePictureName));
                 }
             }
 
@@ -307,7 +277,7 @@ const CourseConroller = {
                         courseNameLower: nameCourse ? nameCourse.toLowerCase() : undefined,
                         courseImage: coursePictureName || undefined,
                         courseDescription: descriptionCourse || undefined,
-                        theoreticalMaterials: courseMaterialName || undefined,
+                        theoreticalMaterials: theoreticalMaterials || undefined,
                     },
                 });
 

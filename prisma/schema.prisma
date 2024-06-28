@@ -21,9 +21,7 @@ model User {
   tel           String
   role          String          @default("USER")
   resultsCourse ResultsCourse[]
-  unions        Membership[]
   Participation Participation[]
-  libraryCard   LibraryCard?
 }
 
 // Модели для курса
@@ -141,31 +139,31 @@ model Participation {
 
 // Схема читательского билета
 
-model LibraryCard {
-  id         String   @id @default(uuid())
-  cardNumber String   @default(uuid())
-  issueDate  DateTime @default(now())
-  userId     String   @unique
-  user       User     @relation(fields: [userId], references: [id])
-}
+// model LibraryCard {
+//   id         String   @id @default(uuid())
+//   cardNumber String   @default(uuid())
+//   issueDate  DateTime @default(now())
+//   userId     String   @unique
+//   user       User     @relation(fields: [userId], references: [id])
+// }
 
 // Схема профсоюза
 
-model Union {
-  id          Int          @id @default(autoincrement())
-  name        String       @unique
-  description String
-  members     Membership[]
-}
+// model Union {
+//   id          Int          @id @default(autoincrement())
+//   name        String       @unique
+//   description String
+//   members     Membership[]
+// }
 
 // Схема пользователей в профсоюзе
 
-model Membership {
-  id      Int    @id @default(autoincrement())
-  userId  String
-  unionId Int
-  user    User   @relation(fields: [userId], references: [id])
-  union   Union  @relation(fields: [unionId], references: [id])
+// model Membership {
+//   id      Int    @id @default(autoincrement())
+//   userId  String
+//   unionId Int
+//   user    User   @relation(fields: [userId], references: [id])
+//   union   Union  @relation(fields: [unionId], references: [id])
 
-  @@unique([userId, unionId])
-}
+//   @@unique([userId, unionId])
+// }

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { UserController, CourseConroller, BooksController, ResultsCourseController, NewsController, ProfsouzController, EventsController, LibraryController } = require("../controllers");
+const { UserController, CourseConroller, BooksController, ResultsCourseController, NewsController, EventsController } = require("../controllers");
 const authenticateToken = require("../middlewares/auth");
 const authorizeRoles = require('../middlewares/authorizeRoles');
 
@@ -43,12 +43,6 @@ router.delete("/news/:id", authenticateToken, authorizeRoles(["ADMIN", "MODERATO
 router.get("/news", NewsController.getAllNews);
 router.get("/news/:id", NewsController.getNewsById);
 
-// Роуты Профсоюза
-router.post("/union", authenticateToken, ProfsouzController.createProfsouz);
-router.post("/add-user-union", authenticateToken, ProfsouzController.addUserProfsouz);
-router.delete("/union/:id", authenticateToken, authorizeRoles(["ADMIN", "MODERATOR"]), ProfsouzController.deleteUserProfsouz);
-router.get("/union", authenticateToken, authorizeRoles(["ADMIN", "MODERATOR"]), ProfsouzController.getAllUsersProfsouz);
-
 // Роуты мероприятий
 router.post("/events", authenticateToken, authorizeRoles(["ADMIN", "MODERATOR"]), EventsController.createEvent);
 router.post("/event/:id", authenticateToken, EventsController.joinEvent);
@@ -60,10 +54,5 @@ router.get("/events/:id", authenticateToken, EventsController.getEventById);
 router.put("/events/:id", authenticateToken, authorizeRoles(["ADMIN", "MODERATOR"]), EventsController.updateEvent);
 
 // router.post("/day", EventsController.main);
-
-// Роуты библиотеки
-router.post("/library", authenticateToken, LibraryController.joinLibrary);
-router.delete("/library/:id", authenticateToken, authorizeRoles(["ADMIN", "MODERATOR"]), LibraryController.deleteUserInLibrary);
-router.get("/library", authenticateToken, LibraryController.getAllLibrary);
 
 module.exports = router;

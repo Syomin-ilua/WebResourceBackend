@@ -4,8 +4,6 @@ const BooksController = require("./books-controller");
 const ResultsCourseController = require("./resultsCourse-controller");
 const NewsController = require("./news-controller");
 const EventsController = require("./events-controller");
-const ProfsouzController = require("./profsouz-controller");
-const LibraryController = require("./library-controller");
 
 module.exports = {
     UserController,
@@ -14,6 +12,4 @@ module.exports = {
     BooksController,
     NewsController,
     EventsController,
-    ProfsouzController,
-    LibraryController
 }

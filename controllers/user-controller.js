@@ -167,15 +167,6 @@ const UserController = {
                 where: {
                     id: req.user.userId
                 },
-                include: {
-                    unions: {
-                        where: {
-                            userId: req.user.userId,
-                            unionId: 1
-                        }
-                    },
-                    libraryCard: true
-                }
             });
 
             if (!user) {
@@ -194,16 +185,7 @@ const UserController = {
     },
     getAllUsers: async (req, res) => {
         try {
-            const users = await prisma.user.findMany({
-                include: {
-                    unions: {
-                        where: {
-                            userId: req.user.userId,
-                            unionId: 1
-                        }
-                    }
-                }
-            });
+            const users = await prisma.user.findMany();
             return res.status(200).json(users);
         } catch (error) {
             return res.status(500).json({
@@ -246,12 +228,6 @@ const UserController = {
                     userId: id, 
                 }
             })
-
-            const deleteMembership = await prisma.membership.deleteMany({
-                where: {
-                    userId: id
-                }
-            });
 
             const deleteUser = await prisma.user.delete({
                 where: { id },
